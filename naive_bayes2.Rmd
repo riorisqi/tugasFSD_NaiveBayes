@@ -1,0 +1,49 @@
+---
+title: "Naive Bayes"
+author: "Rio Risqi - Arya Nanda"
+date: "10/24/2020"
+output: html_document
+---
+
+```{r}
+#the dataset
+library(datasets)
+fsd_data <- read.csv("/Users/LENOVO/Documents/RStudio/naive_bayes2/iris.csv")
+fsd_data
+```
+
+```{r}
+#structure of the data
+str(fsd_data)
+```
+
+```{r}
+library(naivebayes)
+library(e1071)
+#Naive Bayes model
+Naive_Bayes_Model=naiveBayes(Species ~., data=fsd_data)
+#printing the model
+Naive_Bayes_Model
+```
+
+```{r}
+#input new data
+newData <- data.frame(Id = "151", SepalLengthCm = "4.3", SepalWidthCm = "2.7", PetalLengthCm = "1.3", PetalWidthCm =  "0.4", Species="")
+newData
+```
+
+```{r}
+#Predict the new data
+vector_prediction = predict(Naive_Bayes_Model, newData, type = "raw")
+vp = vector_prediction
+vp
+```
+
+```{r}
+#predict the new data (cont'd)
+yhat_status = colnames(vp)[max.col(vp,ties.method="first")]
+sprintf("y_hat for the new data is '%s'",yhat_status)
+newData$Species <- yhat_status
+newData
+```
+
